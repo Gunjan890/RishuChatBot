@@ -2,17 +2,11 @@ import logging
 import asyncio
 import uvloop
 
-# ✅ Fix for Python 3.12 + uvloop + Abg crash
 try:
-    asyncio.get_running_loop()
+    asyncio.get_event_loop()
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-
-# Use default asyncio loop for Python 3.12 (safe mode)
-asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
-# ⚡ If you want uvloop’s performance, you can switch later by uncommenting:
-# asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 import time
 from pymongo import MongoClient
